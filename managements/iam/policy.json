@@ -1,0 +1,30 @@
+{
+  "autoscaler": {
+    "policy": [
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeTags",
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:TerminateInstanceInAutoScalingGroup",
+      "ec2:DescribeLaunchTemplateVersions"
+    ]
+  },
+  "ebs": {
+    "policy": [
+      "ec2:CreateVolume",
+      "ec2:DeleteVolume",
+      "ec2:AttachVolume",
+      "ec2:DetachVolume",
+      "ec2:DescribeInstances",
+      "ec2:DescribeVolumes",
+      "ec2:DescribeVolumeAttribute",
+      "ec2:DescribeVolumeStatus",
+      "ec2:DescribeSnapshots",
+      "ec2:CreateTags"
+    ]
+  },
+  "kms": {
+    "policy": ["kms:CreateGrant", "kms:DescribeKey"]
+  }
+}
