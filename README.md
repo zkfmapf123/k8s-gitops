@@ -2,6 +2,8 @@
 
 ## Architecture
 
+![todo](./public/toto.png)
+
 ```
     |- managements
     |- platforms
