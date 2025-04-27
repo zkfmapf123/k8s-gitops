@@ -69,6 +69,14 @@ module "eks_aws_auth" {
       groups   = ["system:masters"]
     }
   ]
+
+  aws_auth_users = [
+    {
+      userarn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/admin"
+      username = "admin"
+      groups   = ["system:masters"]
+    }
+  ]
 }
 
 output "nodegroup_iam_role_name" {

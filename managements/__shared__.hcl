@@ -85,7 +85,7 @@ inputs = {
         version = "1.32"
         ng_min_size = 1
         ng_max_size = 3
-        ng_desired_size = 1
+        ng_desired_size = 2
         eks_instance_type = "t4g.medium"
         ami_type = "AL2_ARM_64"
     }

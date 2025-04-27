@@ -13,8 +13,7 @@
     
     }
 
-    variable "vpc" { 
-    
-    }
+    variable "vpc" {}
+    variable "nodegroup_iam_role_name" {}
 
     data "aws_caller_identity" "current" {}
