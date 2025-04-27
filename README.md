@@ -4,10 +4,21 @@
 
 ![todo](./public/toto.png)
 
-```
+```sh
     |- managements
+        |- eks-cluster
+        |- iam
+        |- network
     |- platforms
+        |- alb-ingress
+        |- argocd
+        |- argocd-rollout
+        |- grafana
+        |- loki
     |- services
+        |- user-api
+        |- payment-api
+        |- mysql (statefulset)
 ```
 
 ## Configure
