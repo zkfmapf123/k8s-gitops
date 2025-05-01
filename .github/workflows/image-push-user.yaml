@@ -35,6 +35,6 @@ jobs:
         run: |
           docker buildx build \
           --platform linux/arm64 \
-          -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/user-api:${IMAGE_TAG} \
+          -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/user-api:${IMAGE_TAG} \
           --push \ 
           ./platforms/service-user
