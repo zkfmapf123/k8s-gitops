@@ -25,7 +25,7 @@ spec:
               service:
                 name: user
                 port:
-                  number: 80
+                  number: 3000
     - host: payment.leedonggyu.com
       http:
         paths:
@@ -35,4 +35,4 @@ spec:
               service:
                 name: payment
                 port:
-                  number: 80
+                  number: 3000
