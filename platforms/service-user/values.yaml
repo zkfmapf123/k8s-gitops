@@ -1,10 +1,14 @@
-replicaCount: 3
+replicaCount: 1
 
 image:
   repository: 182024812696.dkr.ecr.ap-northeast-2.amazonaws.com/user-api
-  pullPolicy: IfNotPresent
-  tag: "latest"
 
+  ## IfNotPresent 일 경우, 이미지가 존재하지 않을 경우에만 이미지를 가져옴 (캐시는 좋으나, 문제가 있는 이미지를 계속 쓸 위험이 존재)
+  # pullPolicy: IfNotPresent
+  pullPolicy: Always
+  tag: latest
+
+## private registry 설정
 imagePullSecrets: 
   - name: aws-ecr-secret
 
@@ -39,7 +43,7 @@ ingress:
 service:
   type: ClusterIP
   name: user
-  port: 3000
+  port: 80
   targetPort: 3000
 
 resources: 
@@ -53,13 +57,13 @@ resources:
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
-    path: /ping
+    path: /api/ping
     port: http
   initialDelaySeconds: 30
   periodSeconds: 30
 readinessProbe:
   httpGet:
-    path: /ping
+    path: /api/ping
     port: http
   initialDelaySeconds: 15
   periodSeconds: 5

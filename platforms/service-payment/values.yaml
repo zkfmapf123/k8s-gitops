@@ -1,40 +1,29 @@
-# Default values for service-payment.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+replicaCount: 1
 
-# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 3
-
-# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: 182024812696.dkr.ecr.ap-northeast-2.amazonaws.com/payment-api
-  pullPolicy: IfNotPresent
-  tag: "latest"
 
-# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-imagePullSecrets: []
-# This is to override the chart name.
-nameOverride: ""
-fullnameOverride: ""
+  ## IfNotPresent 일 경우, 이미지가 존재하지 않을 경우에만 이미지를 가져옴 (캐시는 좋으나, 문제가 있는 이미지를 계속 쓸 위험이 존재)
+  # pullPolicy: IfNotPresent
+  pullPolicy: Always
+  tag: latest
 
-# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+## private registry 설정
+imagePullSecrets: 
+  - name: aws-ecr-secret
+
 serviceAccount:
-  # Specifies whether a service account should be created
   create: true
-  # Automatically mount a ServiceAccount's API credentials?
   automount: true
-  # Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-# This is for setting Kubernetes Annotations to a Pod.
-# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 podAnnotations: {}
-# This is for setting Kubernetes Labels to a Pod.
-# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-podLabels: {}
+podLabels:
+  service: payment-api
+  version: 1.0.0
+  env: dev
+  author: leedonggyu
 
 podSecurityContext: {}
   # fsGroup: 2000
@@ -47,51 +36,37 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
-service:
-  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: ClusterIP
-  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 80
-
-# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  type: ClusterIP
+  name: payment
+  port: 3000
+  targetPort: 3000
+
+resources: 
+  limits: ## 최대로 보장받는 resources
+    cpu: 500m
+    memory: 512Mi
+  requests: ## 최소로 보장받는 resources
+    cpu: 200m
+    memory: 256Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
-    path: /ping
+    path: /api/ping
     port: http
+  initialDelaySeconds: 30
+  periodSeconds: 30
 readinessProbe:
   httpGet:
-    path: /ping
+    path: /api/ping
     port: http
+  initialDelaySeconds: 15
+  periodSeconds: 5
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -114,8 +89,10 @@ volumeMounts: []
 #   mountPath: "/etc/foo"
 #   readOnly: true
 
+## 특정 node에만 배포해야할때 사용하는 옵션 (여기에만 배포 해)
 nodeSelector: {}
 
+## (여기에도 배포 해도 돼) - 좀더 복잡한 조건에 활용
 tolerations: []
 
 affinity: {}
