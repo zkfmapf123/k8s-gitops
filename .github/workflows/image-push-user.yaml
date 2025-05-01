@@ -9,6 +9,8 @@ env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: user-api
   IMAGE_TAG: ${{ github.ref_name }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
 
 jobs:
   build-and-push:
