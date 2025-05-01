@@ -51,3 +51,6 @@ jobs:
           platforms: linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            GOARCH=arm64
+            GOARM=7
