@@ -6,7 +6,6 @@ on:
       - 'user-api-v*'
 
 env:
-  AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: user-api
   IMAGE_TAG: ${{ github.ref_name }}
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
@@ -36,7 +35,8 @@ jobs:
       - name: Build and push
         run: |
           docker buildx build \
-          --platform linux/arm64 \
-          -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/user-api:${IMAGE_TAG} \
-          --push \ 
-          ./platforms/service-user
+            --platform linux/arm64 \
+            -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} \
+            -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:latest \
+            --push \
+            ./services/user-api

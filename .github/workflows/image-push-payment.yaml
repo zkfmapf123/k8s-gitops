@@ -1,4 +1,4 @@
-name: Build and Push Payment API Image
+name: Build and Push payment API Image
 
 on:
   push:
@@ -6,9 +6,10 @@ on:
       - 'payment-api-v*'
 
 env:
-  AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: payment-api
   IMAGE_TAG: ${{ github.ref_name }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
 
 jobs:
   build-and-push:
@@ -26,20 +27,16 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/oidc-github-action
           aws-region: ${{ env.AWS_REGION }}
-
+      
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: arm64
-
       - name: Build and push
         run: |
           docker buildx build \
-          --platform linux/arm64 \
-          -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/payment-api:${IMAGE_TAG} \
-          --push \ 
-          ./platforms/service-payment
+            --platform linux/arm64 \
+            -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} \
+            -t ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:latest \
+            --push \
+            ./services/payment-api
