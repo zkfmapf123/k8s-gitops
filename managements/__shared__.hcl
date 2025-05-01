@@ -75,7 +75,7 @@ dependency "k8s" {
 
 inputs = {
     // 실제 사용 여부
-    is_use = true
+    is_use = false
     eks_name = "donggyu-eks"
 
     vpc = dependency.network.outputs.vpc

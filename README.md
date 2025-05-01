@@ -21,6 +21,19 @@
         |- mysql (statefulset)
 ```
 
+## Todo
+
+- [x] Managements 구성 (EKS, IAM, Network)
+- [x] alb-ingress 구성
+- [x] service-user 구성
+- [x] service-payment 구성
+- [x] argocd 구성
+- [ ] argocd-rollout 구성
+- [ ] couchbase 구성
+- [ ] grafana 구성
+- [ ] prometheus 구성
+- [ ] loki / tempo / mimir 구성
+
 ## Configure
 
 ### eks 설정
