@@ -28,6 +28,10 @@
 - [x] service-user 구성
 - [x] service-payment 구성
 - [x] argocd 구성
+     - [x] argcod service CI/CD 구성
+     - [ ] pull 방식 구현
+     - [ ] push 방식 구현
+        - <a href="https://github.com/youyoungnam/kubernetes-implement/tree/main/ArgoCD/ArgoCD_optimization?trk=feed-detail_comments-list_comment-text"> Push </a>
 - [ ] argocd-rollout 구성
 - [ ] couchbase 구성
 - [ ] grafana 구성
