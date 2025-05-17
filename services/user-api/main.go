@@ -6,7 +6,6 @@ import (
 	"os/signal"
 	"syscall"
 
-	_ "github.com/zkfmapf123/pdf-bot/docs"
 	"github.com/zkfmapf123/pdf-bot/handlers"
 
 	"github.com/gofiber/fiber/v2"

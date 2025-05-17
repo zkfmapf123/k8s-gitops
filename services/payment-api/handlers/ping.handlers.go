@@ -15,5 +15,5 @@ type PingResponse struct {
 //	@success		200				{object}	handlers.PingResponse
 //	@router			/api/ping [get]
 func PingHandlers(c *fiber.Ctx) error {
-	return c.JSON(PingResponse{Msg: "hello world"})
+	return c.JSON(PingResponse{Msg: "hello world payment 100.0"})
 }

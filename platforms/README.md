@@ -63,3 +63,18 @@ failed to sync cluster https://172.20.0.1:443: failed to load initial state of r
 ```
 
 - rbac.yaml 추가
+
+### argocd target unhealthyhost
+
+- 1~2시간 정상적으로 동작하다가 계속 unhealthyhost 발생 (health check 이슈)
+
+```sh
+alb.ingress.kubernetes.io/backend-protocol: HTTPS
+    alb.ingress.kubernetes.io/healthcheck-path: /healthz
+    alb.ingress.kubernetes.io/healthcheck-port: "8080"
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+    alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+    alb.ingress.kubernetes.io/success-codes: "200-399"
+```
