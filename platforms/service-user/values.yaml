@@ -18,10 +18,12 @@ serviceAccount:
   annotations: {}
   name: ""
 
-podAnnotations: {}
+podAnnotations: 
+  notifications.argoproj.io/subscribe.on-deployed.slack: jenkins-slack-notification
+
 podLabels:
   service: user-api
-  version: 1.0.0
+  version: 2.0.0
   env: dev
   author: leedonggyu
 
