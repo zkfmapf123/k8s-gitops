@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: 182024812696.dkr.ecr.ap-northeast-2.amazonaws.com/payment-api

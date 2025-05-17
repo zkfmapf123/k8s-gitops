@@ -44,3 +44,32 @@ alb.ingress.kubernetes.io/backend-protocol: HTTPS
 ### argocd 초기 비밀번호
 
 - donggyu-eks / argocd-initial-admin-secret
+
+```sh
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
+### argocd connection failed
+
+```sh
+failed to sync cluster https://172.20.0.1:443: failed to load initial state of resource Endpoints: endpoints is forbidden: User "system:serviceaccount:platform:argocd-application-controller" cannot list resource "endpoints" in API group "" at the cluster scope
+```
+
+```
+k logs -l app.kubernetes.io/name=argocd-application-controller |
+ tail -n 5
+
+{"level":"info","msg":"Using diffing customizations to ignore resource updates","time":"2025-05-17T05:26:59Z"}
+{"level":"warning","msg":"Failed to save clusters info: server.secretkey is missing","time":"2025-05-17T05:26:59Z"} #### 이 놈이 문제 ( ArgoCD의 SecretKey가 설정되지 않았음)
+{"level":"info","msg":"Ignore status for all objects","time":"2025-05-17T05:26:59Z"}
+{"level":"info","msg":"0x400059c150 subscribed to settings updates","time":"2025-05-17T05:26:59Z"}
+{"level":"info","msg":"Cluster https://kubernetes.default.svc has been assigned to shard 0","time":"2025-05-17T05:26:59Z"}
+{"level":"info","msg":"Starting secretInformer forcluster","time":"2025-05-17T05:26:59Z"}
+{"level":"info","msg":"Notifying 1 settings subscribers: [0x400059c150]","time":"2025-05-17T05:29:00Z"}
+{"level":"info","msg":"Ignore status for all objects","time":"2025-05-17T05:29:00Z"}
+{"level":"info","msg":"Using diffing customizations to ignore resource updates","time":"2025-05-17T05:29:00Z"}
+{"level":"info","msg":"Ignore status for all objects","time":"2025-05-17T05:29:00Z"}
+```
+
+- kubectl get secret -n platform argocd-cluster-credentials -o yaml (클러스터 자격증명이 없음)
+- 즉, ArgoCD가 현재 클러스터와의 연결을 설정하지 못하고 있음
