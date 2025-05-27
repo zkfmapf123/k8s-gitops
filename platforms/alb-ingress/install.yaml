@@ -79,3 +79,13 @@ spec:
                 name: payment
                 port:
                   number: 3000
+    - host: bubble-pool.leedonggyu.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: bubble-pool
+                port:
+                  number: 80
