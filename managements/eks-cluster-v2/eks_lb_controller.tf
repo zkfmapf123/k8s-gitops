@@ -1,10 +1,10 @@
 variable "lb_attr" {
   default = {
-    name = "aws-load-balancer-controller"
-    namespace = "kube-system"
+    name       = "aws-load-balancer-controller"
+    namespace  = "kube-system"
     repository = "https://aws.github.io/eks-charts"
-    chart = "aws-load-balancer-controller"
-    version = "1.7.1"
+    chart      = "aws-load-balancer-controller"
+    version    = "1.7.1"
   }
 }
 
@@ -40,10 +40,10 @@ resource "kubernetes_service_account" "alb_controller" {
 resource "helm_release" "alb_controller" {
   namespace  = var.lb_attr.namespace
   repository = var.lb_attr.repository
-  name    = var.lb_attr.name
-  chart   = var.lb_attr.chart
-  version = var.lb_attr.version
-  
+  name       = var.lb_attr.name
+  chart      = var.lb_attr.chart
+  version    = var.lb_attr.version
+
   set {
     name  = "clusterName"
     value = lookup(var.eks_attr, "name")
@@ -62,7 +62,7 @@ resource "helm_release" "alb_controller" {
   }
   set {
     name  = "vpcId"
-    value = local.vpc.vpc_id    
+    value = local.vpc.vpc_id
   }
   depends_on = [kubernetes_service_account.alb_controller]
 }

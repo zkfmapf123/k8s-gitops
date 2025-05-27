@@ -1,3 +1,0 @@
-# ...
-
-- cluster -> blueprint -> karpenter

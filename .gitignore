@@ -2,3 +2,8 @@
 .terraform.lock.hcl
 
 Makefile
+
+managements/eks-cluster
+platforms
+services
+Makefile

@@ -9,9 +9,9 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.31"
 
-  cluster_name    = lookup(var.eks_attr, "name")
-  cluster_version = lookup(var.eks_attr, "version")
-  cluster_endpoint_public_access = true  // 외부에서 접근 가능
+  cluster_name                    = lookup(var.eks_attr, "name")
+  cluster_version                 = lookup(var.eks_attr, "version")
+  cluster_endpoint_public_access  = true // 외부에서 접근 가능
   cluster_endpoint_private_access = true // 내부에서 접근 가능
 
   create_cluster_security_group = false
@@ -25,17 +25,17 @@ module "eks" {
 
   # EKS Addons
   cluster_addons = {
-    coredns            = {
+    coredns = {
       most_recent = true
     }
-    kube-proxy         = {
-        most_recent = true
+    kube-proxy = {
+      most_recent = true
     }
-    vpc-cni            = {
-        most_recent = true
+    vpc-cni = {
+      most_recent = true
     }
     aws-ebs-csi-driver = {
-        most_recent = true
+      most_recent = true
     }
     # eks-pod-identity-agent = {}
   }
