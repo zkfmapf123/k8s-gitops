@@ -15,9 +15,9 @@ module "eks" {
 
   eks_managed_node_groups = {
     zent-node = {
-      name                     = join("-", [var.eks_name, "nodegroup"])
+      name                     = join("-", [var.eks_name, "ng"])
       use_name_prefix          = false
-      iam_role_name            = join("-", [var.eks_name, "nodegroup"])
+      iam_role_name            = join("-", [var.eks_name, "ng"])
       iam_role_use_name_prefix = false
 
       min_size       = lookup(local.eks_cluster_attr, "ng_min_size")
@@ -27,7 +27,7 @@ module "eks" {
       ami_type       = "AL2_ARM_64"
       subnet_ids     = values(local.vpc.was_subnets)
 
-      capacity_type = "SPOT"
+      // capacity_type = "SPOT"
     }
   }
 
