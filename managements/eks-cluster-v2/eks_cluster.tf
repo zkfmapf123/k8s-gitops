@@ -11,8 +11,8 @@ module "eks" {
 
   cluster_name    = lookup(var.eks_attr, "name")
   cluster_version = lookup(var.eks_attr, "version")
-  cluster_endpoint_public_access = true
-  cluster_endpoint_private_access = false
+  cluster_endpoint_public_access = true  // 외부에서 접근 가능
+  cluster_endpoint_private_access = true // 내부에서 접근 가능
 
   create_cluster_security_group = false
   create_node_security_group    = false
@@ -69,6 +69,4 @@ module "eks_aws_auth" {
       groups   = ["system:masters"]
     }
   ]
-
-  depends_on = [ module.eks ]
 }
